@@ -1,0 +1,66 @@
+<!-- E-MAIL DA CONVERTIZE NÃO POSSUI INFO DE CLIENTE -->
+{% load l10n i18n shop_tags %}
+{% localize off %}
+<table cellspacing="0" cellpadding="10" border="0" bgcolor="#f7f7f7" align="center" width="100%">
+    <tr>
+        <td>
+            <font face="Arial, Helvetica, sans-serif" size="2">
+                <table align="center" cellpadding="10" cellspacing="10" width="600" bgcolor="#ffffff">
+                    <tr>
+                        <td>
+                            <a href="https://convertize.com.br/" target="_blank" style="display: block;">
+                                <img src="https://convertize.com.br/s/img/logo-inverse.png" alt="Convertize" />
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                <table align="center" cellpadding="0" cellspacing="0" width="600" bgcolor="#f7f7f7">
+                    <tr>
+                        <td height="3"></td>
+                    </tr>
+                </table>
+                <table align="center" cellpadding="0" cellspacing="10" width="600" bgcolor="#ffffff">
+                    <tr>
+                        <td>
+                            <table cellpadding="10" cellspacing="0" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <td align="left">
+                                            <strong>Olá, {{ export.user.get_full_name }}</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left">
+											Seu aquivo já está disponível
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                    	<td align="left">
+                                        	<a href="{{ URL_EMAIL }}m/export/{{ export.uuid }}.{{ export.extension|lower }}" target="_blank" style="display: inline-block; background: #438ae1; color: #fff; padding: 5px; text-decoration: none; border-radius: 4px;">
+                                            	<b>Visualizar</b>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table cellpadding="10" cellspacing="0" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            E-mail de confirmação automática, não é necessário respondê-lo.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </font>
+        </td>
+    </tr>
+</table>
+{% endlocalize %}
