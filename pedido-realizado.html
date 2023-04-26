@@ -150,15 +150,6 @@
                                                                         <span align="center" style="display: block; background: #fff; padding: 5px; border-radius: 4px;">
                                                                             {{ payment.transaction.extra_data.qrcode }}
                                                                         </span>
-                                                            		 {% elif payment.transaction.group == 'Deliverypay' %}
-                                                                        <p>Você selecionou <b>PIX</b></p>
-                                                                        <br /> <br />
-                                                                        <p>CHAVE PIX - CNPJ:</p>
-                                                                        <p><strong>31237764000129</strong></p>
-                                                                        <p>SIXWINE COMERCIAL</p>
-                                                                        <br /> <br />
-                                                                        <p class="size18 fw600">Copie a nossa chave</p>
-                                                                        <p>Abra o app do seu banco na opção Pix, em seguida, cole a chave e confira os dados.</p>
                                                                     {% endif %}
                                                                 {% endwith %}
                                                             {% endfor %}
