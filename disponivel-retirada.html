@@ -1,5 +1,6 @@
 {% load l10n i18n shop_tags %}
 {% localize off %}
+{% with pickup=order.pickup %}
 <table cellspacing="0" cellpadding="10" border="0" bgcolor="#f7f7f7" align="center" width="100%">
     <tr>
         <td>
@@ -92,12 +93,7 @@
                                                 <tbody>
                                                     <tr align="left">
                                                         <td>
-                                                            {% open_url_json URL_EMAIL|add:'/api/1.0/public/freights/pickup/' as data_retira %}
-                                                            {% for retira in data_retira %}
-                                                                {% if order.shipping_type == retira.name %}
-                                                                	{{ retira.address }}, {{ retira.number }} - {{ retira.neighborhood }} | CEP: {{ retira.zipcode }} - {{ retira.city }}, {{ retira.state }}
-                                                                {% endif %}
-                                                            {% endfor %}
+                                                            {{ pickup.address }}, {{ pickup.number }} - {{ pickup.neighborhood }} - {{ pickup.city }}, {{ pickup.state }} | CEP: {{ pickup.zipcode }}
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -180,4 +176,6 @@
             </font>
         </td>
     </tr>
-</table>{% endlocalize %}
+</table>
+{% endwith %}
+{% endlocalize %}
