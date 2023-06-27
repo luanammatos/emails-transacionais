@@ -1,5 +1,6 @@
 {% load l10n i18n shop_tags %}
 {% localize off %}
+{% with pickup=order.pickup %}
 <table cellspacing="0" cellpadding="10" border="0" bgcolor="#f7f7f7" align="center" width="100%">
     <tr>
         <td>
@@ -73,7 +74,7 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <strong>{% if 'retira' in order.shipping_type|slugify %}Retirada{% else %}Entrega{% endif %}</strong>
+                                            <strong>{% if pickup and 'retir' in order.shipping_type|slugify %}Retirada{% else %}Entrega{% endif %}</strong>
                                         </td>
                                     </tr>
                                     <tr bgcolor="#f9f9f9">
@@ -81,13 +82,10 @@
                                             <table cellpadding="10" cellspacing="0" width="100%" style="table-layout:fixed;font-size:14px">
                                                 <tbody>
                                                     <tr align="left">
-                                                        {% if 'retira' in order.shipping_type|slugify %}
-                                                            {% open_url_json URL_EMAIL|add:'/api/1.0/public/freights/pickup/' as data_retira %}
-                                                            {% for retira in data_retira %}
-                                                                <td>
-                                                                    {{ retira.address }}, {{ retira.number }} - {{ retira.neighborhood }} - {{ retira.city }}, {{ retira.zipcode }}
-                                                                </td>
-                                                            {% endfor %}
+                                                        {% if pickup and 'retir' in order.shipping_type|slugify %}
+                                                            <td>
+                                                                {{ pickup.address }}, {{ pickup.number }} - {{ pickup.neighborhood }} - {{ pickup.city }}, {{ pickup.state }} | CEP: {{ pickup.zipcode }}
+                                                            </td>
                                                         {% else %}
                                                             <td>
                                                                 {{ order.shipping_detail_address }}, {{ order.shipping_detail_number }} - {{ order.shipping_detail_neighborhood }} | CEP: {{ order.shipping_detail_postcode }} - {{ order.shipping_detail_city }}, {{ order.shipping_detail_state }}
@@ -177,4 +175,5 @@
         </td>
     </tr>
 </table>
+{% endwith %}
 {% endlocalize %}
