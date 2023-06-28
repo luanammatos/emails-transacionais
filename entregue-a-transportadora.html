@@ -101,65 +101,6 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <strong>Pagamento</strong>
-                                        </td>
-                                    </tr>
-                                    <tr bgcolor="#f9f9f9">
-                                        <td>
-                                            <table cellpadding="10" cellspacing="0" width="100%" style="table-layout:fixed;font-size:14px">
-                                                <tbody>
-                                                    <tr align="left">
-                                                        <td>
-                                                            {% for payment in order.payments.all %}
-                                                                {% with transaction=payment.transaction %}
-                                                                    {% if transaction.group == 'Boleto' %}
-                                                                        <a href="{{ URL_EMAIL }}{% url 'checkout_return' transaction.uuid %}" target="_blank" style="display: inline-block;background: #2b8421; color: #fff; padding: 10px; text-decoration: none; border-radius: 4px;">
-                                                                            <b>Imprimir Boleto</b>
-                                                                        </a>
-                                                                        <br />
-                                                                        <br />
-                                                                        Caso já tenha realizado o pagamento do boleto, por favor, aguarde a aprovação.
-                                                                    {% elif transaction.group == 'CartaoDeCredito' %}
-                                                                        Cartão em {{ transaction.installments }}x 
-                                                                    {% elif transaction.group == 'PIX' %}
-                                                                        Para realizar o pagamento, abra o aplicativo da sua instituição financeira, vá até a seção <strong>Pix</strong> e escolha a opção de <strong>pagar com QR Code</strong>.
-                                                                        <br />
-                                                                        Depois é só apontar a câmera para o QR Code abaixo.
-                                                                        <br />
-                                                                        <br />
-                                                                        <div style="text-align: center;">
-                                                                            <img src="{{ payment.transaction.extra_data.qrcode_image }}" alt="{{ payment.transaction.extra_data.qrcode }}" style="max-width: 50%">
-                                                                        </div>
-                                                                        <br />
-                                                                        <small>Caso não esteja visualizando o <b>QR CODE</b>, <a href="{{ URL_EMAIL }}clientes/central/meus-pedidos/{{ order.id }}/" style="text-decoration:underline;">clique aqui</a> para visualizá-lo na página de Meus Pedidos.</small>
-                                                                        <br />
-                                                                        Se você vai pagar com este mesmo dispositivo copie o código abaixo.
-                                                                        <br />
-                                                                        Depois, na seção <strong>Pix</strong> do aplicativo da sua instituição financeira, procure a função <strong>Pix Copia e Cola</strong>.
-                                                                        <br />
-                                                                        <br />
-                                                                        <span align="center" style="display: block; background: #fff; padding: 5px; border-radius: 4px;">
-                                                                            {{ payment.transaction.extra_data.qrcode }}
-                                                                        </span>
-                                                                    {% endif %}
-                                                                {% endwith %}
-                                                            {% endfor %}
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <table cellpadding="10" cellspacing="0" width="100%">
-                                <tbody>
-                                    <tr>
-                                        <td>
                                             <strong>Resumo do pedido</strong>
                                         </td>
                                     </tr>

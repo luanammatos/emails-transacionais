@@ -6,13 +6,12 @@ Dê sua opinião
 Recuperação de senha
 Sua exportação chegou
 Notificação sobre o pedido #{{ order.id }}
-Lembrete de pagamento
-Confirmação de pagamento
 Seu pedido está aguardando o pagamento
+Confirmação de pagamento
 Seu pedido foi cancelado
 Seu pedido está disponível para retirada
 Seu pedido foi entregue
-Pedido entregue a transportadora
+Pedido em transporte
 A NF-e já está disponível
 Pedido realizado com sucesso
 
