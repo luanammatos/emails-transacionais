@@ -57,19 +57,35 @@
                                     <tr>
                                         <!-- TEXTO PARA MODIFICAR -->
                                     	<td align="left">
-                                        	Nesse pedido os produtos faturados são:
-                                            <br />
-                                            {% for item in order.items.all %}
-                                                <b>{{ item.description }}{% if not forloop.first and not forloop.last %},{% endif %}</b>
-                                            {% endfor %}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <!-- TEXTO PARA MODIFICAR -->
-                                    	<td align="left">
                                         	Por favor, aguarde mais informações sobre seu pedido nos próximos e-mails.
                                         </td>
                                     </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table cellpadding="10" cellspacing="0" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="2">
+                                            <strong>Nesse pedido os produto(s) faturados são:</strong>
+                                        </td>
+                                    </tr>
+                                    {% for item in order.items.all %}
+                                        <tr bgcolor="#f9f9f9">
+                                            <td width="80" style="vertical-align:middle">
+                                                <img src="{{ MEDIA_URL }}{{ item.sku.product.image }}" width="50" height="50" alt="{{ item.description }}" style="vertical-align:middle;">
+                                            </td>
+                                            <td style="text-align:left;vertical-align:middle">
+                                                <span>{{ item.description }}</span>
+                                            </td>
+                                            <td width="150" style="text-align:right;vertical-align:middle">
+                                                <small style="padding-right: 8px;">qtd: {{ item.quantity }}</small> {{ item.unit_price|currency }}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </td>
