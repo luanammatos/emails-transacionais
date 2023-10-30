@@ -1,6 +1,6 @@
 {% load l10n i18n shop_tags %}
 {% localize off %}
-{% with pickup=order.pickup %}
+{% with pickup=subscription.pickup %}
 <table cellspacing="0" cellpadding="10" border="0" bgcolor="#f7f7f7" align="center" width="100%">
     <tr>
         <td>
@@ -10,8 +10,13 @@
                         <td>
                             <a href="{{ URL_EMAIL }}" target="_blank" style="display: block;">
                                 <!-- IMAGEM DA LOGO -->
-                                <img src="{{ MEDIA_URL }}uploads/emails_transacionais/logo.png" alt="SixWine" />
+                                <img src="{{ MEDIA_URL }}uploads/emails_transacionais/logo.png" alt="Convertize" />
                             </a>
+                        </td>
+                        <td align="right">
+                            <strong>Confirmação de assinatura</strong>
+                            <br />
+                            Número <b>#{{ subscription.id }}</b>
                         </td>
                     </tr>
                 </table>
@@ -27,13 +32,64 @@
                                 <tbody>
                                     <tr>
                                         <td align="left">
-                                            <strong>Olá, {{ order.billing_detail_name }}</strong>
+                                            <span style="font-size: 18px; color: #1F8B24;">
+                                                <b>✔ Assinatura criada com sucesso</b>
+                                            </span>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <!-- TEXTO PARA MODIFICAR -->
                                         <td align="left">
-                                            A entrega do pedido <b>#{{ order.formated_id }}</b> foi realizada com sucesso.
+                                            Olá, <b>{{ subscription.billing_detail_name }}</b>, obrigado por criar a sua assinatura.
+                                            <br /><br />
+                                            Agora, seus pedidos serão gerados e cobrados, em seu cartão de crédito, com a frequência que você definiu.
+                                            <br /><br />
+                                            Confira mais detalhes
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table cellpadding="0" cellspacing="10" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <td align="center" bgcolor="#C5DCFA" style="width: 33.33%; height: 100px;">
+                                            <span style="display: block; padding: 10px;">
+                                                Previsão de entrega
+                                                <br />
+                                                <b style="color: #0F56B3; font-size: 18px;">{{ subscription.delivery_date|date:"d/m/Y" }}</b>
+                                            </span>
+                                        </td>
+                                        <td align="center" bgcolor="#C5DCFA" style="width: 33.33%; height: 100px;">
+                                            <span style="display: block; padding: 10px;">
+                                                Pedidos a cada
+                                                <br />
+                                                <b style="color: #0F56B3; font-size: 18px;">{{ subscription.delivery_period }} dia{{ subscription.delivery_period|pluralize }}</b>
+                                            </span>
+                                        </td>
+                                        <td align="center" bgcolor="#C5DCFA" style="width: 33.33%; height: 100px;">
+                                            <span style="display: block; padding: 10px;">
+                                                Próxima cobrança
+                                                <br />
+                                                <b style="color: #0F56B3; font-size: 18px;">{{ subscription.next_billing_at|date:"d/m/Y" }}</b>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table cellpadding="0" cellspacing="10" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <td align="center" bgcolor="#C5DCFA">
+                                            <a href="{{ URL_EMAIL }}{% url 'subscriptions:list' %}" style="display: block; padding: 15px; background: #414141; color: #fff; text-decoration: none;">
+                                                Acompanhar minha assinatura
+                                            </a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -49,7 +105,7 @@
                                             <strong>Produto(s)</strong>
                                         </td>
                                     </tr>
-                                    {% for item in order.items.all %}
+                                    {% for item in subscription.items.all %}
                                         <tr bgcolor="#f9f9f9">
                                             <td width="80" style="vertical-align:middle">
                                                 <img src="{{ MEDIA_URL }}{{ item.sku.product.image }}" width="50" height="50" alt="{{ item.description }}" style="vertical-align:middle;">
@@ -57,7 +113,7 @@
                                             <td style="text-align:left;vertical-align:middle">
                                                 <span>{{ item.description }}</span>
                                             </td>
-                                            <td width="150" style="text-align:right;vertical-align:middle">
+                                            <td style="text-align:right;vertical-align:middle">
                                                 <small style="padding-right: 8px;">qtd: {{ item.quantity }}</small> {{ item.unit_price|currency }}
                                             </td>
                                         </tr>
@@ -66,14 +122,13 @@
                             </table>
                         </td>
                     </tr>
-                    {% if not pickup and 'retir' in order.shipping_type|slugify %}
                     <tr>
                         <td>
                             <table cellpadding="10" cellspacing="0" width="100%">
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <strong>Informações sobre a entrega</strong>
+                                            <strong>{% if pickup and 'retir' in subscription.shipping_type|slugify %}Retirada{% else %}Entrega{% endif %}</strong>
                                         </td>
                                     </tr>
                                     <tr bgcolor="#f9f9f9">
@@ -81,11 +136,21 @@
                                             <table cellpadding="10" cellspacing="0" width="100%" style="table-layout:fixed;font-size:14px">
                                                 <tbody>
                                                     <tr align="left">
-                                                        <td>
-                                                            {{ order.shipping_detail_address }}, {{ order.shipping_detail_number }} - {{ order.shipping_detail_neighborhood }} | CEP: {{ order.shipping_detail_postcode }} - {{ order.shipping_detail_city }}, {{ order.shipping_detail_state }}
-                                                            <br />
-                                                            {% if order.shipping_detail_complement %}{{ order.shipping_detail_complement }}{% endif %}
-                                                        </td>
+                                                        {% if pickup and 'retir' in subscription.shipping_type|slugify %}
+                                                            <td>
+                                                                <b>Seu pedido deve retirado em:</b>
+                                                                <br />
+                                                                {{ pickup.address }}, {{ pickup.number }} - {{ pickup.neighborhood }} - {{ pickup.city }}, {{ pickup.state }} | CEP: {{ pickup.zipcode }}
+                                                            </td>
+                                                        {% else %}
+                                                            <td>
+                                                                <b>Seu pedido será enviado para:</b>
+                                                                <br />
+                                                                {{ subscription.shipping_detail_address }}, {{ subscription.shipping_detail_number }} - {{ subscription.shipping_detail_neighborhood }} | CEP: {{ subscription.shipping_detail_postcode }} - {{ subscription.shipping_detail_city }}, {{ subscription.shipping_detail_state }}
+                                                                <br />
+                                                                {% if subscription.shipping_detail_complement %}Complemento: {{ subscription.shipping_detail_complement }}{% endif %}
+                                                            </td>
+                                                        {% endif %}
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -95,7 +160,6 @@
                             </table>
                         </td>
                     </tr>
-                    {% endif %}
                     <tr>
                         <td>
                             <table cellpadding="10" cellspacing="0" width="100%">
@@ -110,16 +174,20 @@
                                             <table cellpadding="5" cellspacing="0" width="100%">
                                                 <tbody>
                                                     <tr>
+                                                        <td>Pagamento:</td>
+                                                        <td align="right">{{ subscription.card.card_mask }} - {{ subscription.card.installments }}</td>
+                                                    </tr>
+                                                    <tr>
                                                         <td>Data do Pedido:</td>
-                                                        <td align="right">{{ order.add_date|date:"d/m/Y" }}</td>
+                                                        <td align="right">{{ subscription.add_date|date:"d/m/Y" }}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Status:</td>
-                                                        <td align="right">{{ order.get_status_display }}</td>
+                                                        <td>Entrega:</td>
+                                                        <td align="right">{{ subscription.shipping_total|currency }}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Frete:</td>
-                                                        <td align="right">{{ order.shipping_total|currency }}</td>
+                                                        <td>Descontos:</td>
+                                                        <td align="right">{{ subscription.discount_total|currency }}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -129,7 +197,7 @@
                                                         <td>
                                                             <strong>Total:</strong>
                                                         </td>
-                                                        <td align="right"><strong>{{ order.total|currency }}</strong></td>
+                                                        <td align="right"><strong>{{ subscription.total|currency }}</strong></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -137,10 +205,10 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>
-                                                            Detalhes do Pedido:
+                                                            Detalhes da Assinatura:
                                                         </td>
                                                         <td align="right">
-                                                            <a href="{{ URL_EMAIL }}/clientes/central/meus-pedidos/{{ order.id }}/" target="_blank" style="display: block;">ver detalhes</a>
+                                                            <a href="{{ URL_EMAIL }}{% url 'subscriptions:list' %}" target="_blank" style="display: block;">ver detalhes</a>
                                                         </td>
                                                     </tr>
                                                 </tbody>

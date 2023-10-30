@@ -1,22 +1,24 @@
 Assuntos por ordem das notificações:
 
-Produto disponível
+Seu produto está disponível para compra
 Chave de acesso
-Dê sua opinião
+Sua opinião é importante!
 Recuperação de senha
+Sua assinatura não foi aprovada
+Parabéns! Agora você é um assinante
+Sua assinatura está próxima da renovação
 Sua exportação chegou
-Notificação sobre o pedido #{{ order.id }}
-Seu pedido está aguardando o pagamento
-Confirmação de pagamento
+Informações sobre o pedido #{{ order.id }}
+Estamos aguardando seu pagamento
+Pagamento confirmado!
 Seu pedido foi cancelado
-Seu pedido está disponível para retirada
+Seu pedido já está disponível para retirada
+Seu pedido está sem separação
 Seu pedido foi entregue
-Pedido em transporte
-A NF-e já está disponível
-Pedido realizado com sucesso
+Seu pedido está em transporte
+Seu pedido foi faturado
+Seu pedido foi realizado com sucesso!
 
 No e-mail de exportação as informações são diferentes pois se trata de um e-mail enviado pela Convertize, segue abaixo:
 Nome do e-mail: Convertize
 E-mail de envio: noreply@convertize.com.br
-
-Importante: o nome da retirada muda de acordo com a configuração do cliente, será sempre necessário verificar o nome da retirada do cliente e modificar nos e-mails que possuem if de 'retira'.

@@ -33,7 +33,19 @@
                                     <tr>
                                         <!-- TEXTO PARA MODIFICAR -->
                                         <td align="left">
-                                            A entrega do pedido <b>#{{ order.formated_id }}</b> foi realizada com sucesso.
+                                            Seu pedido de número <b>#{{ order.id }}</b> já está pronto para ser retirado.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <!-- TEXTO PARA MODIFICAR -->
+                                        <td align="left">
+                                            Verifique as informações de retirada, como endereço e horário de funcionamento e/ou retirada de produtos.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <!-- TEXTO PARA MODIFICAR -->
+                                        <td align="left">
+                                            Não se esqueça de levar documento com foto para identificação do comprador ou autorização do comprador caso outra pessoa retire o(s) produto(s).
                                         </td>
                                     </tr>
                                 </tbody>
@@ -66,14 +78,13 @@
                             </table>
                         </td>
                     </tr>
-                    {% if not pickup and 'retir' in order.shipping_type|slugify %}
                     <tr>
                         <td>
                             <table cellpadding="10" cellspacing="0" width="100%">
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <strong>Informações sobre a entrega</strong>
+                                            <strong>Retirada</strong>
                                         </td>
                                     </tr>
                                     <tr bgcolor="#f9f9f9">
@@ -82,9 +93,7 @@
                                                 <tbody>
                                                     <tr align="left">
                                                         <td>
-                                                            {{ order.shipping_detail_address }}, {{ order.shipping_detail_number }} - {{ order.shipping_detail_neighborhood }} | CEP: {{ order.shipping_detail_postcode }} - {{ order.shipping_detail_city }}, {{ order.shipping_detail_state }}
-                                                            <br />
-                                                            {% if order.shipping_detail_complement %}{{ order.shipping_detail_complement }}{% endif %}
+                                                            {{ pickup.address }}, {{ pickup.number }} - {{ pickup.neighborhood }} - {{ pickup.city }}, {{ pickup.state }} | CEP: {{ pickup.zipcode }}
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -95,7 +104,6 @@
                             </table>
                         </td>
                     </tr>
-                    {% endif %}
                     <tr>
                         <td>
                             <table cellpadding="10" cellspacing="0" width="100%">
@@ -115,7 +123,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Status:</td>
-                                                        <td align="right">{{ order.get_status_display }}</td>
+                                                        <td align="right">Disponível para retirada</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Frete:</td>
@@ -139,7 +147,7 @@
                                                         <td>
                                                             Detalhes do Pedido:
                                                         </td>
-                                                        <td align="right">
+                                                        <td align="right">                                                            
                                                             <a href="{{ URL_EMAIL }}/clientes/central/meus-pedidos/{{ order.id }}/" target="_blank" style="display: block;">ver detalhes</a>
                                                         </td>
                                                     </tr>
