@@ -9,11 +9,11 @@ Parabéns! Agora você é um assinante
 Sua assinatura está próxima da renovação
 Sua exportação chegou
 Informações sobre o pedido #{{ order.id }}
-Estamos aguardando seu pagamento
+Seu pedido está aguardando o pagamento
 Pagamento confirmado!
 Seu pedido foi cancelado
 Seu pedido já está disponível para retirada
-Seu pedido está sem separação
+Seu pedido está em separação
 Seu pedido foi entregue
 Seu pedido está em transporte
 Seu pedido foi faturado
